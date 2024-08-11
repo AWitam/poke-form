@@ -50,12 +50,5 @@ export const theme = createTheme({
         hiddenLabel: true,
       },
     },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: ({ theme: { palette } }) => ({
-          color: palette.common.black,
-        }),
-      },
-    },
   },
 });
