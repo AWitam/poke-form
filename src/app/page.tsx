@@ -1,95 +1,54 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Autocomplete } from "@/components/Autocomplete";
+import { Button } from "@/components/Button";
+import { Chip } from "@/components/Chip";
+import { Input } from "@/components/Input";
+import { Label } from "@/components/Label";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+
+const options = [
+  { label: "The Godfather", id: 1 },
+  { label: "Pulp Fiction", id: 2 },
+  { label: "The Dark Knight", id: 3 },
+  { label: "Forrest Gump", id: 4 },
+];
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <main>
+      <Container>
+        <Stack direction="row" spacing={2} my={2}>
+          <Box height={40} width={40} bgcolor="primary.main" />
+          <Box height={40} width={40} bgcolor="primary.dark" />
+          <Box height={40} width={40} bgcolor="primary.light" />
+          <Box height={40} width={40} bgcolor="grey.100" />
+          <Box height={40} width={40} bgcolor="grey.200" />
+          <Box height={40} width={40} bgcolor="grey.300" />
+          <Box height={40} width={40} bgcolor="grey.400" />
+          <Box height={40} width={40} bgcolor="error.main" />
+          <Box height={40} width={40} bgcolor="action.disabled" />
+        </Stack>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        <Stack spacing={2} direction="row" my={2}>
+          <Button variant="contained">Inactive</Button>
+          <Button variant="soft">Inactive</Button>
+        </Stack>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+        <Stack spacing={2} direction="row" my={2}>
+          <Stack width={300}>
+            <Label htmlFor="movie">Movie</Label>
+            <Autocomplete options={options} inputProps={{ id: "movie", helperText: "test", placeholder: "movies" }} />
+          </Stack>
+          <Stack>
+            <Label htmlFor="movie">Movie</Label>
+            <Input helperText="test" placeholder="test" />
+          </Stack>
+        </Stack>
+        <Stack spacing={2} direction="row" my={2}>
+          <Chip label="The Godfather" variant="filled" />
+        </Stack>
+      </Container>
     </main>
   );
 }
