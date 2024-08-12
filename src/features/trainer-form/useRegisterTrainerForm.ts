@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { parse } from "path";
+import { useEffect } from "react";
 
 const trainerNameErrorMessage = "Required from 2 to 20 symbols";
 
@@ -24,22 +24,22 @@ const formSchema = z.object({
   ),
   pokemonName: z.object(
     {
-      id: z.number(),
       name: z.string().min(1, "Choose something"),
+      id: z.number().optional(),
     },
-    { message: "Choose something" }
+    { required_error: "Choose something" }
   ),
 });
 
 export const useRegisterTrainerForm = () => {
-  const { register, reset, handleSubmit, control, getValues } = useForm<
+  const { register, reset, handleSubmit, control, watch, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
       trainerName: "",
       age: "",
-      pokemonName: undefined,
+      pokemonName: { id: undefined, name: "" },
     },
   });
 
@@ -48,5 +48,7 @@ export const useRegisterTrainerForm = () => {
     console.log(data);
   });
 
-  return { register, control, reset, onSubmit };
+  const pokemonQuery = watch("pokemonName").name
+
+  return { register, control, reset, onSubmit, pokemonQuery, setValue };
 };

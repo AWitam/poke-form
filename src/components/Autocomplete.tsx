@@ -79,7 +79,7 @@ export const Autocomplete = <
   inputProps,
   ...props
 }: AutocompleteProps<
-  Value,
+  Value extends string ? string : Value,
   Multiple,
   DisableClearable,
   FreeSolo,

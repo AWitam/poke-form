@@ -2,12 +2,13 @@
 import { Input } from "@/components/Input";
 import { Label } from "@/components/Label";
 import { Autocomplete } from "@/components/Autocomplete";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, capitalize, Grid, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
 import { PokemonPreview } from "./PokemonPreview";
 import { formatDate } from "@/lib/utils";
 import { Controller } from "react-hook-form";
 import { useRegisterTrainerForm } from "./useRegisterTrainerForm";
+import { usePokemonAutocomplete } from "./usePokemonAutocomplete";
 
 type DateInfo = {
   dayOfWeek: string;
@@ -20,13 +21,18 @@ interface TrainerRegistrationFormProps {
   date: { error: string } | DateInfo;
 }
 
-const options = [{ id: 1, name: "Bulbasaur" }];
+const options = [];
 
 export const TrainerRegistrationForm = ({
   date,
 }: TrainerRegistrationFormProps) => {
   const isDateError = "error" in date;
-  const { control, onSubmit } = useRegisterTrainerForm();
+  const { control, onSubmit, pokemonQuery, setValue } =
+    useRegisterTrainerForm();
+
+  const { data } = usePokemonAutocomplete({
+    query: pokemonQuery,
+  });
 
   return (
     <Box
@@ -57,6 +63,7 @@ export const TrainerRegistrationForm = ({
               control={control}
               render={({ field, fieldState }) => (
                 <Input
+                  fullWidth
                   id="trainer-name"
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
@@ -73,6 +80,7 @@ export const TrainerRegistrationForm = ({
               control={control}
               render={({ field, fieldState }) => (
                 <Input
+                  fullWidth
                   id="trainer-age"
                   type="number"
                   placeholder="Trainer's age"
@@ -85,28 +93,30 @@ export const TrainerRegistrationForm = ({
           </Grid>
           <Grid item xs={2}>
             <Label htmlFor="pokemon-name">Pokémon&apos;s name</Label>
-
             <Controller
               name="pokemonName"
               control={control}
               render={({ field, fieldState }) => (
                 <Autocomplete
-                  onChange={(e, value) => field.onChange(value)}
-                  value={field.value ?? null}
+                  freeSolo
                   inputProps={{
-                    ...field,
                     id: "pokemon-name",
                     placeholder: "Pokémon's name",
                     error: !!fieldState.error,
                     helperText: fieldState.error?.message,
                   }}
-                  isOptionEqualToValue={(option, value) =>
-                    option.id === value?.id
-                  }
                   getOptionLabel={(option) =>
-                    typeof option === "string" ? option : option.name
+                    capitalize(
+                      typeof option === "string" ? option : option.name
+                    )
                   }
-                  options={options}
+                  onChange={(_, value) => {
+                    field.onChange(value ? value : { id: undefined, name: "" });
+                  }}
+                  onInputChange={(_, value) => {
+                    setValue("pokemonName", { name: value });
+                  }}
+                  options={data}
                 />
               )}
             />

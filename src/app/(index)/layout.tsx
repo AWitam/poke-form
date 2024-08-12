@@ -1,11 +1,7 @@
 import Container from "@mui/material/Container";
 import { ReactNode } from "react";
 
-export default function TrainerFormLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function IndexLayout({ children }: { children: ReactNode }) {
   return (
     <main>
       <Container

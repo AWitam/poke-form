@@ -1,10 +1,8 @@
 import { TrainerRegistrationForm } from "@/features/trainer-form/TrainerRegistrationForm";
 import { getDate } from "@/lib/fetchers";
-import { formatDate } from "@/lib/utils";
 
-export default async function Home() {
+export default async function Index() {
   const date = await getDate();
-
 
   return <TrainerRegistrationForm date={date} />;
 }
