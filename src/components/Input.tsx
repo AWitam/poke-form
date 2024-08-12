@@ -6,6 +6,9 @@ import TextField, { TextFieldProps } from "@mui/material/TextField";
 export const Input = styled(TextField)<TextFieldProps>(({ theme }) => ({
   "& .MuiInputBase-root": {
     margin: "0.125rem 0",
+    '& fieldset': {
+      borderColor: theme.palette.grey[400],   
+    },
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
     },

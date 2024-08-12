@@ -50,5 +50,12 @@ export const theme = createTheme({
         hiddenLabel: true,
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        body2: {
+          lineHeight: 1.5,
+        },
+      },
+    },
   },
 });

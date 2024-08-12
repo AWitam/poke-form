@@ -8,6 +8,9 @@ const StyledAutocomplete = styled(MUIAutocomplete)(({ theme }) => ({
   "& .MuiAutocomplete-inputRoot": {
     margin: "0.125rem 0",
     padding: " 0.875rem 0.625rem",
+    "& fieldset": {
+      borderColor: theme.palette.grey[400],
+    },
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
     },
