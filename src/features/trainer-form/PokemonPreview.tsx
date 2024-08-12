@@ -33,7 +33,12 @@ const Types = ({ types }: { types: string[] }) => {
   );
 };
 
-export const PokemonPreview = ({ name, types, baseExperience, id }: PreviewBoxProps) => {
+export const PokemonPreview = ({
+  name,
+  types,
+  baseExperience,
+  id,
+}: PreviewBoxProps) => {
   return (
     <Box
       sx={{
@@ -49,6 +54,7 @@ export const PokemonPreview = ({ name, types, baseExperience, id }: PreviewBoxPr
       <Stack gap={3} direction={{ xs: "column", sm: "row" }} width={"100%"}>
         <Item alignItems={"center"}>
           <Image
+            priority
             width={96}
             height={96}
             alt={"sdf"}
@@ -58,7 +64,9 @@ export const PokemonPreview = ({ name, types, baseExperience, id }: PreviewBoxPr
         <Item>
           <Typography variant="body2">Name: {name}</Typography>
           <Types types={types} />
-          <Typography variant="body2">Base experience: {baseExperience}</Typography>
+          <Typography variant="body2">
+            Base experience: {baseExperience}
+          </Typography>
           <Typography variant="body2">Id: {id}</Typography>
         </Item>
       </Stack>
