@@ -58,7 +58,7 @@ export const PokemonPreview = ({ name, types, baseExperience, id }: PreviewBoxPr
         <Item>
           <Typography variant="body2">Name: {name}</Typography>
           <Types types={types} />
-          <Typography variant="body2">Base experience: ${baseExperience}</Typography>
+          <Typography variant="body2">Base experience: {baseExperience}</Typography>
           <Typography variant="body2">Id: {id}</Typography>
         </Item>
       </Stack>
