@@ -1,4 +1,6 @@
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
+
+import data from "../../data/pokemon.json";
 
 interface UsePokemonAutocompleteProps {
   query?: string;
@@ -6,6 +8,8 @@ interface UsePokemonAutocompleteProps {
 }
 
 type PokemonItem = { name: string; id: number };
+
+const initialData = data.data.slice(0, 10);
 
 export const usePokemonAutocomplete = ({
   query,
@@ -20,7 +24,9 @@ export const usePokemonAutocomplete = ({
       const data = await res.json();
       return data;
     },
-    { fallbackData: [] }
+    {
+      fallbackData: initialData
+    }
   );
 
   return {

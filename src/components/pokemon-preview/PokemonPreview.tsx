@@ -1,5 +1,12 @@
 import { Chip } from "@/components/Chip";
-import { Box, BoxProps, Skeleton, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  BoxProps,
+  capitalize,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
 import { usePokemonPreview } from "./usePokemonPreview";
 
@@ -44,7 +51,9 @@ export const PokemonPreview = ({ pokemonId }: PokemonPreviewProps) => {
             )}
           </Item>
           <Item>
-            <Typography variant="body2">Name: {pokemonData?.name}</Typography>
+            <Typography variant="body2">
+              Name: {capitalize(pokemonData?.name ?? '')}
+            </Typography>
             <Types types={pokemonData?.types} />
             <Typography variant="body2">
               Base experience: {pokemonData?.baseExperience}

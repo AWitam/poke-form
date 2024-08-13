@@ -34,8 +34,14 @@ const formSchema = z.object({
     ),
 });
 
-export const useRegisterTrainerForm = () => {
-  const { register, reset, handleSubmit, control, watch, setValue } = useForm<
+interface UseRegisterTrainerFormProps {
+  onSuccessfulSubmit: () => void;
+}
+
+export const useRegisterTrainerForm = ({
+  onSuccessfulSubmit,
+}: UseRegisterTrainerFormProps) => {
+  const { control, reset, handleSubmit, watch, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
@@ -46,12 +52,18 @@ export const useRegisterTrainerForm = () => {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log("Submitting form");
-    console.log(data);
-  });
-
   const pokemonField = watch("pokemon");
 
-  return { register, control, reset, onSubmit, pokemonField, setValue };
+  const onSubmit = handleSubmit((data) => {
+    console.log("Submitted", data);
+    onSuccessfulSubmit();
+  });
+
+  return {
+    control,
+    pokemonField,
+    reset,
+    onSubmit,
+    setValue,
+  };
 };
