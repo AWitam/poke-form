@@ -6,7 +6,7 @@ import MUIChip, { ChipProps as MUIChipProps } from "@mui/material/Chip";
 export const Chip = styled(MUIChip)<MUIChipProps>(({ theme, variant }) => ({
   padding: "0.25rem 0.5rem",
   color: theme.palette.common.black,
-  height: 'unset',
+  height: "unset",
 
   "& .MuiChip-label": {
     fontSize: "0.75rem",
