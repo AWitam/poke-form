@@ -21,14 +21,16 @@ const formSchema = z.object({
       message: "Required range from 16-99",
     }
   ),
+  query: z.string().optional(),
   pokemon: z
     .object({
-      name: z.string().min(1, "Choose something"),
+      name: z.string(),
       id: z.number().optional(),
     })
+    .optional()
     .refine(
       (val) => {
-        return val.name.length > 0 && val.id !== undefined;
+        return !!val;
       },
       { message: "Choose something" }
     ),
@@ -41,29 +43,32 @@ interface UseRegisterTrainerFormProps {
 export const useRegisterTrainerForm = ({
   onSuccessfulSubmit,
 }: UseRegisterTrainerFormProps) => {
-  const { control, reset, handleSubmit, watch, setValue } = useForm<
+  const { control, reset, handleSubmit, getValues, setValue, watch } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     defaultValues: {
       trainerName: "",
       trainerAge: "",
-      pokemon: { name: "", id: undefined },
+      pokemon: undefined,
+      query: "",
     },
   });
-
-  const pokemonField = watch("pokemon");
 
   const onSubmit = handleSubmit((data) => {
     console.log("Submitted", data);
     onSuccessfulSubmit();
   });
 
+  const autocompleteValue = getValues("pokemon");
+  const query = watch("query");
+
   return {
     control,
-    pokemonField,
+    autocompleteValue,
+    query,
+    setValue,
     reset,
     onSubmit,
-    setValue,
   };
 };

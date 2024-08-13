@@ -7,6 +7,7 @@ import {
   Box,
   capitalize,
   CircularProgress,
+  debounce,
   Grid,
   Modal,
   Typography,
@@ -18,7 +19,7 @@ import { Controller } from "react-hook-form";
 import { useRegisterTrainerForm } from "./useRegisterTrainerForm";
 import { usePokemonAutocomplete } from "./usePokemonAutocomplete";
 import { SuccessModal } from "./SuccessModal";
-import { FormEvent, FormEventHandler, SyntheticEvent, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 type DateInfo = {
   dayOfWeek: string;
@@ -37,18 +38,13 @@ export const TrainerRegistrationForm = ({
   const isDateError = "error" in date;
   const [isOpen, setOpen] = useState(false);
 
-  const { control, pokemonField, onSubmit, setValue, reset } =
+  const { control, query, onSubmit, setValue, reset, autocompleteValue } =
     useRegisterTrainerForm({
       onSuccessfulSubmit: () => setOpen(true),
     });
 
-  // should fetch only when the name (query) is present, but autocomplete value is not selected yet
-  const shouldFetchSuggestions = Boolean(
-    pokemonField?.name && !pokemonField?.id
-  );
   const { data, isLoading } = usePokemonAutocomplete({
-    query: pokemonField?.name?.trim().toLocaleLowerCase(),
-    shouldFetch: shouldFetchSuggestions,
+    query: query?.trim().toLocaleLowerCase(),
   });
 
   return (
@@ -122,8 +118,8 @@ export const TrainerRegistrationForm = ({
                 control={control}
                 render={({ field, fieldState }) => (
                   <Autocomplete
-                    freeSolo
                     id="pokemon-name"
+                    loading={isLoading}
                     renderInput={(props) => (
                       <Input
                         {...props}
@@ -141,31 +137,27 @@ export const TrainerRegistrationForm = ({
                         }}
                       />
                     )}
+                    filterOptions={(x) => x}
                     getOptionLabel={(option) =>
-                      capitalize(
-                        typeof option === "string"
-                          ? option
-                          : option
-                          ? option?.name
-                          : ""
-                      )
+                      typeof option === "string"
+                        ? option
+                        : capitalize(option?.name ?? "")
                     }
-                    value={field?.value ?? null}
+                    isOptionEqualToValue={(option, value) =>
+                      option?.name === value?.name
+                    }
+                    value={field.value}
                     onChange={(_, value) => {
-                      field.onChange(
-                        value ? value : { id: undefined, name: "" }
-                      );
+                      value && field.onChange(value);
                     }}
-                    onInputChange={(_, value) => {
-                      setValue("pokemon", { name: value });
-                    }}
+                    onInputChange={(_, value) => setValue("query", value)}
                     options={data}
                   />
                 )}
               />
             </Grid>
             <Grid item xs={2}>
-              <PokemonPreview pokemonId={pokemonField?.id} />
+              <PokemonPreview pokemonId={autocompleteValue?.id} />
             </Grid>
             <Grid item xs={2}>
               <Box
