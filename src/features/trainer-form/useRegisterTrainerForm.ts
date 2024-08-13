@@ -35,21 +35,14 @@ const formSchema = z.object({
 });
 
 export const useRegisterTrainerForm = () => {
-  const {
-    register,
-    reset,
-    handleSubmit,
-    control,
-    watch,
-    setValue,
-    formState,
-    getFieldState,
-  } = useForm<z.infer<typeof formSchema>>({
+  const { register, reset, handleSubmit, control, watch, setValue } = useForm<
+    z.infer<typeof formSchema>
+  >({
     resolver: zodResolver(formSchema),
     defaultValues: {
       trainerName: "",
       trainerAge: "",
-      pokemon: { id: undefined, name: "" },
+      pokemon: { name: "", id: undefined },
     },
   });
 

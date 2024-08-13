@@ -1,17 +1,10 @@
 "use client";
 
 import React, { ElementType } from "react";
-import {
-  alpha,
-  ChipTypeMap,
-  Paper,
-  styled,
-  TextFieldProps,
-} from "@mui/material";
+import { alpha, ChipTypeMap, Paper, styled } from "@mui/material";
 import MUIAutocomplete, {
   AutocompleteProps as MUIAutocompleteProps,
 } from "@mui/material/Autocomplete";
-import { Input } from "./Input";
 
 const StyledAutocomplete = styled(MUIAutocomplete)(({ theme }) => ({
   "& .MuiAutocomplete-inputRoot": {
@@ -50,47 +43,24 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 
 type DefaultChip = ChipTypeMap["defaultComponent"];
 
-interface AutocompleteProps<
-  Value,
-  Multiple extends boolean = false,
-  DisableClearable extends boolean = false,
-  FreeSolo extends boolean = false,
-  ChipComponent extends ElementType = DefaultChip
-> extends Omit<
-    MUIAutocompleteProps<
-      Value,
-      Multiple,
-      DisableClearable,
-      FreeSolo,
-      ChipComponent
-    >,
-    "renderInput"
-  > {
-  inputProps: TextFieldProps;
-}
-
 export const Autocomplete = <
   Value,
   Multiple extends boolean,
   DisableClearable extends boolean,
   FreeSolo extends boolean,
   ChipComponent extends ElementType = DefaultChip
->({
-  inputProps,
-  ...props
-}: AutocompleteProps<
-  Value extends string ? string : Value,
-  Multiple,
-  DisableClearable,
-  FreeSolo,
-  ChipComponent
->) => {
+>(
+  props: MUIAutocompleteProps<
+    Value extends string ? string : Value,
+    Multiple,
+    DisableClearable,
+    FreeSolo,
+    ChipComponent
+  >
+) => {
   return (
     <StyledAutocomplete
       fullWidth
-      renderInput={(renderInputProps) => (
-        <Input {...renderInputProps} {...inputProps} />
-      )}
       PaperComponent={(paperProps) => <StyledPaper {...paperProps} />}
       {...props}
     />

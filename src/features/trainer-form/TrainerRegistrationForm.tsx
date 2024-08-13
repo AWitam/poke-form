@@ -7,7 +7,6 @@ import {
   capitalize,
   CircularProgress,
   Grid,
-  TextField,
   Typography,
 } from "@mui/material";
 import { Button } from "@/components/Button";
@@ -16,7 +15,6 @@ import { formatDate } from "@/lib/utils";
 import { Controller } from "react-hook-form";
 import { useRegisterTrainerForm } from "./useRegisterTrainerForm";
 import { usePokemonAutocomplete } from "./usePokemonAutocomplete";
-import { usePokemonPreview } from "./pokemon-preview/usePokemonPreview";
 
 type DateInfo = {
   dayOfWeek: string;
@@ -39,11 +37,9 @@ export const TrainerRegistrationForm = ({
   // should fetch only when the name (query) is present, but autocomplete value is not selected yet
   const shouldFetchSuggestions = Boolean(pokemonField.name && !pokemonField.id);
   const { data, isLoading } = usePokemonAutocomplete({
-    query: pokemonField.name.trim().toLocaleLowerCase(),
+    query: pokemonField?.name?.trim().toLocaleLowerCase(),
     shouldFetch: shouldFetchSuggestions,
   });
-
-  console.log(isLoading);
 
   return (
     <Box
@@ -112,11 +108,22 @@ export const TrainerRegistrationForm = ({
                 <Autocomplete
                   freeSolo
                   id="pokemon-name"
-                  inputProps={{
-                    placeholder: "Pokémon's name",
-                    error: !!fieldState.error,
-                    helperText: fieldState.error?.message,
-                  }}
+                  renderInput={(props) => (
+                    <Input
+                      {...props}
+                      error={!!fieldState.error}
+                      placeholder="Choose"
+                      helperText={fieldState.error?.message}
+                      InputProps={{
+                        endAdornment: (
+                          <>
+                            {isLoading && <CircularProgress size={20} />}
+                            {props.InputProps?.endAdornment}
+                          </>
+                        ),
+                      }}
+                    />
+                  )}
                   getOptionLabel={(option) =>
                     capitalize(
                       typeof option === "string" ? option : option.name
