@@ -1,7 +1,8 @@
 import searchPokemon from "@/lib/pokemon-search";
 import { NextRequest, NextResponse } from "next/server";
+import { unstable_cache } from "next/cache";
 
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get("query");
 
@@ -9,7 +10,15 @@ export function GET(request: NextRequest) {
     return new Response("Query parameter is required", { status: 400 });
   }
 
-  const results = searchPokemon(query, 10)
+  const getResults = unstable_cache(
+    async (query) => searchPokemon(query, 10),
+    [query]
+  );
 
-  return NextResponse.json(results, { status: 200 });
+  const results = await getResults(query);
+
+  return NextResponse.json(results, {
+    status: 200,
+    headers: { "Cache-Control": "public, max-age=3600" },
+  });
 }

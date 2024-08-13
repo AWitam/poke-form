@@ -1,18 +1,20 @@
-import useSWR from "swr";
-import { unknown } from "zod";
+import useSWR, { useSWRConfig } from "swr";
 
 interface UsePokemonAutocompleteProps {
   query?: string;
+  shouldFetch: boolean;
 }
 
 type PokemonItem = { name: string; id: number };
 
 export const usePokemonAutocomplete = ({
   query,
+  shouldFetch,
 }: UsePokemonAutocompleteProps) => {
   // TODO: debounce and cache query
-  const { data, isLoading, mutate } = useSWR<PokemonItem[]>(
-    () => (query ? `/api/search?query=${query}` : null),
+  const cacheKey = `/api/search?query=${query}`;
+  const { data, isLoading, isValidating, mutate } = useSWR<PokemonItem[]>(
+    () => (shouldFetch ? cacheKey : null),
     async (url: string) => {
       const res = await fetch(url);
       const data = await res.json();
@@ -23,7 +25,7 @@ export const usePokemonAutocomplete = ({
 
   return {
     data: data ?? [],
-    isLoading,
+    isLoading: isLoading || isValidating,
     mutate,
   };
 };

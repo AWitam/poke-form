@@ -4,20 +4,17 @@ import { createFuseInstance } from "./fuse";
 
 type PokemonItem = (typeof pokemon.data)[number];
 
-let fuseInstance: Fuse<PokemonItem> | null = null;
+const searchPokemon =
+  (fuseInstance: Fuse<PokemonItem>) => (query: string, limit: number) => {
+    return fuseInstance
+      .search(query)
+      .slice(0, limit)
+      .map((result) => result.item);
+  };
 
-const searchPokemon = (query: string, limit: number) => {
-  if (!fuseInstance) {
-    console.log("Creating fuse instance");
-    fuseInstance = createFuseInstance(pokemon.data, {
-      keys: ["name"],
-    });
-  }
+const fuseInstance = createFuseInstance(pokemon.data, {
+  keys: ["name"],
+  threshold: 0.3,
+});
 
-  return fuseInstance
-    .search(query)
-    .slice(0, limit)
-    .map((result) => result.item);
-};
-
-export default searchPokemon;
+export default searchPokemon(fuseInstance);
