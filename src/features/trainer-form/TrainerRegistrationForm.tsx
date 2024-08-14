@@ -74,12 +74,12 @@ export const TrainerRegistrationForm = ({
           <Grid spacing={3} container columns={2}>
             <Grid item xs={2}>
               <Box display={"flex"} justifyContent={"flex-end"}>
-                {/* <Typography
+                <Typography
                   variant="body2"
                   color={isDateError ? "error.main" : ""}
                 >
                   {isDateError ? date.error : formatDate({ ...date })}
-                </Typography> */}
+                </Typography>
               </Box>
             </Grid>
             <Grid item xs={2} sm={1}>

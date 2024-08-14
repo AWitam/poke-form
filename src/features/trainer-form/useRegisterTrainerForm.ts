@@ -63,8 +63,6 @@ export const useRegisterTrainerForm = ({
   const autocompleteValue = getValues("pokemon");
   const query = watch("query");
 
-
-  console.log("formState", formState.errors);
   return {
     control,
     autocompleteValue,
