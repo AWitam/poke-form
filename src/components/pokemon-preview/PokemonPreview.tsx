@@ -1,7 +1,8 @@
 import { Chip } from "@/components/Chip";
+import type {
+  BoxProps} from "@mui/material";
 import {
   Box,
-  BoxProps,
   capitalize,
   Skeleton,
   Stack,

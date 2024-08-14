@@ -9,7 +9,6 @@ import {
   CircularProgress,
   debounce,
   Grid,
-  Modal,
   Typography,
 } from "@mui/material";
 import { Button } from "@/components/Button";
@@ -19,7 +18,7 @@ import { Controller } from "react-hook-form";
 import { useRegisterTrainerForm } from "./useRegisterTrainerForm";
 import { usePokemonAutocomplete } from "./usePokemonAutocomplete";
 import { SuccessModal } from "./SuccessModal";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 type DateInfo = {
   dayOfWeek: string;
@@ -47,6 +46,7 @@ export const TrainerRegistrationForm = ({
     query: query?.trim().toLocaleLowerCase(),
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetValue = useCallback(
     debounce((value) => {
       setValue("query", value);
@@ -138,7 +138,7 @@ export const TrainerRegistrationForm = ({
                           endAdornment: (
                             <>
                               {isLoading && <CircularProgress size={20} />}
-                              {props.InputProps?.endAdornment}
+                              {props.InputProps.endAdornment}
                             </>
                           ),
                         }}
@@ -154,9 +154,7 @@ export const TrainerRegistrationForm = ({
                       option?.name === value?.name
                     }
                     value={field.value ?? null}
-                    onChange={(_, value) => {
-                      value && field.onChange(value);
-                    }}
+                    onChange={(_, value) => field.onChange(value)}
                     onInputChange={(_, value, reason) => {
                       if (reason === "clear") {
                         field.onChange(null);

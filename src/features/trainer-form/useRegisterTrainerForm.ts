@@ -26,14 +26,11 @@ const formSchema = z.object({
     .object({
       name: z.string(),
       id: z.number().optional(),
-    }, {required_error: "Choose something"})
-    .nullable()
-    .refine(
-      (val) => {
-        return !!val;
-      },
-      { message: "Choose something" }
-    ),
+    })
+    .optional()
+    .refine((val) => {
+      return val?.id !== undefined;
+    }, "Choose something"),
 });
 
 interface UseRegisterTrainerFormProps {
@@ -43,7 +40,7 @@ interface UseRegisterTrainerFormProps {
 export const useRegisterTrainerForm = ({
   onSuccessfulSubmit,
 }: UseRegisterTrainerFormProps) => {
-  const { control, reset, handleSubmit, getValues, setValue, watch, formState } = useForm<
+  const { control, reset, handleSubmit, getValues, setValue, watch } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),

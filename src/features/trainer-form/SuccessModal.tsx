@@ -1,10 +1,8 @@
 "use client";
 
 import { Button, Paper, Typography } from "@mui/material";
-import Box from "@mui/material/Box";
+
 import Modal from "@mui/material/Modal";
-import { on } from "events";
-import { useState } from "react";
 
 interface SuccessModalProps {
   isOpen: boolean;

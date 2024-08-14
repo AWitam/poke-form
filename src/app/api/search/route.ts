@@ -1,5 +1,6 @@
+import type { NextRequest} from "next/server";
+import { NextResponse } from "next/server";
 import searchPokemon from "@/lib/pokemon-search";
-import { NextRequest, NextResponse } from "next/server";
 import { unstable_cache } from "next/cache";
 
 export async function GET(request: NextRequest) {

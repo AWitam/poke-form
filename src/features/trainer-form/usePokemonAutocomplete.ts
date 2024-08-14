@@ -1,13 +1,10 @@
 import useSWR from "swr";
-import data from "../../data/pokemon.json";
 
 interface UsePokemonAutocompleteProps {
   query?: string;
 }
 
 type PokemonItem = { name: string; id: number };
-
-const initialData = data.data.slice(0, 10);
 
 export const usePokemonAutocomplete = ({
   query,

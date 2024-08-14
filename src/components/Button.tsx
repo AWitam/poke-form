@@ -1,6 +1,7 @@
 "use client";
 
-import MUIButton, { ButtonProps } from "@mui/material/Button";
+import type { ButtonProps } from "@mui/material/Button";
+import MUIButton from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 
 export const Button = styled(MUIButton)<ButtonProps>(({ theme, variant }) => ({

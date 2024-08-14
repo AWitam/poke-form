@@ -1,7 +1,8 @@
 "use client";
 
 import { styled } from "@mui/material";
-import TextField, { TextFieldProps } from "@mui/material/TextField";
+import type { TextFieldProps } from "@mui/material/TextField";
+import TextField from "@mui/material/TextField";
 
 export const Input = styled(TextField)<TextFieldProps>(({ theme, error }) => ({
   "& .MuiInputBase-root": {
