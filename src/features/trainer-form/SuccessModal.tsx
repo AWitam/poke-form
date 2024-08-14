@@ -16,11 +16,7 @@ export const SuccessModal = ({
 }: SuccessModalProps) => {
   return (
     <div>
-      <Modal
-        open={isOpen}
-        onClose={onClose}
-        aria-labelledby="modal-modal-title"
-      >
+      <Modal open={isOpen} onClose={onClose} aria-labelledby="modal-success">
         <Paper
           sx={{
             display: "flex",
@@ -35,7 +31,12 @@ export const SuccessModal = ({
             p: 4,
           }}
         >
-          <Typography variant="h2" color="primary.main" id="modal-modal-title">
+          <Typography
+            fontSize={40}
+            color="common.black"
+            id="modal-success"
+            pb={4}
+          >
             Success
           </Typography>
           <Button variant="contained" color="primary" onClick={onReset}>
