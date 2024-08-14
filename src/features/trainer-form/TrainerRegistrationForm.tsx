@@ -47,6 +47,13 @@ export const TrainerRegistrationForm = ({
     query: query?.trim().toLocaleLowerCase(),
   });
 
+  const debouncedSetValue = useCallback(
+    debounce((value) => {
+      setValue("query", value);
+    }, 400),
+    [setValue]
+  );
+
   return (
     <>
       <SuccessModal
@@ -146,11 +153,18 @@ export const TrainerRegistrationForm = ({
                     isOptionEqualToValue={(option, value) =>
                       option?.name === value?.name
                     }
-                    value={field.value}
+                    value={field.value ?? null}
                     onChange={(_, value) => {
                       value && field.onChange(value);
                     }}
-                    onInputChange={(_, value) => setValue("query", value)}
+                    onInputChange={(_, value, reason) => {
+                      if (reason === "clear") {
+                        field.onChange(null);
+                      }
+                      if (value) {
+                        debouncedSetValue(value);
+                      }
+                    }}
                     options={data}
                   />
                 )}
@@ -165,7 +179,7 @@ export const TrainerRegistrationForm = ({
                 justifyContent={{ xs: "center", sm: "flex-end" }}
                 gap={2}
               >
-                <Button variant="soft" onClick={() => reset()}>
+                <Button variant="soft" type="reset" onClick={() => reset()}>
                   Reset
                 </Button>
                 <Button variant="contained" type="submit">

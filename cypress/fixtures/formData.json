@@ -1,0 +1,21 @@
+{
+  "successMessage": "Success",
+  "resetMessage": "Reset form",
+  "errorMessageMap": {
+    "invalidName": "Required from 2 to 20 symbols",
+    "invalidAge": "Required range from 16-99",
+    "invalidPokemon": "Choose something"
+  },
+  "valid": {
+    "name": "Ash",
+    "age": 25,
+    "query": "pika",
+    "match": "Pikachu"
+  },
+  "invalid": {
+    "name": "A",
+    "age": 15,
+    "query": "pika",
+    "match": "Pikachu"
+  }
+}
