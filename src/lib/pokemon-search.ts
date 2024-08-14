@@ -1,4 +1,4 @@
-import Fuse from "fuse.js";
+import type Fuse from "fuse.js";
 import pokemon from "../data/pokemon.json";
 import { createFuseInstance } from "./fuse";
 

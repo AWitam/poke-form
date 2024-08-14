@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "e2e:dev": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
     "e2e:dev:headless": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
     "e2e:ci": "start-server-and-test start http://localhost:3000 \"cypress run --e2e\""
@@ -24,6 +25,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.2",
     "swr": "^2.2.5",
+    "typescript-eslint": "^8.1.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

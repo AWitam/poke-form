@@ -1,12 +1,13 @@
 "use client";
 
-import React, { ElementType } from "react";
-import { alpha, ChipTypeMap, Paper, styled } from "@mui/material";
-import MUIAutocomplete, {
-  AutocompleteProps as MUIAutocompleteProps,
-} from "@mui/material/Autocomplete";
+import type { ElementType } from "react";
+import React from "react";
+import type { ChipTypeMap } from "@mui/material";
+import { alpha, Paper, styled } from "@mui/material";
+import type { AutocompleteProps as MUIAutocompleteProps } from "@mui/material/Autocomplete";
+import MUIAutocomplete from "@mui/material/Autocomplete";
 
-const StyledAutocomplete = styled(MUIAutocomplete)(({ theme }) => ({
+const StyledAutocomplete = styled(MUIAutocomplete)(() => ({
   "& .MuiAutocomplete-inputRoot": {
     padding: "0.875rem 0.625rem",
 

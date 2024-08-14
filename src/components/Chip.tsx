@@ -1,7 +1,8 @@
 "use client";
 
 import { styled } from "@mui/material";
-import MUIChip, { ChipProps as MUIChipProps } from "@mui/material/Chip";
+import type { ChipProps as MUIChipProps } from "@mui/material/Chip";
+import MUIChip from "@mui/material/Chip";
 
 export const Chip = styled(MUIChip)<MUIChipProps>(({ theme, variant }) => ({
   padding: "0.25rem 0.5rem",

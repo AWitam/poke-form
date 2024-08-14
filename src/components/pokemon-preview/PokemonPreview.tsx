@@ -1,12 +1,6 @@
 import { Chip } from "@/components/Chip";
-import {
-  Box,
-  BoxProps,
-  capitalize,
-  Skeleton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import type { BoxProps } from "@mui/material";
+import { Box, capitalize, Skeleton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { usePokemonPreview } from "./usePokemonPreview";
 
@@ -36,37 +30,54 @@ export const PokemonPreview = ({ pokemonId }: PokemonPreviewProps) => {
     >
       {isEmptyState ? (
         <Box>Your pokemon</Box>
-      ) : ( 
+      ) : (
         <Stack gap={3} direction={{ xs: "column", sm: "row" }} width={"100%"}>
-          <Item>
-            {isLoadingPokemonData ? (
+          <StackItem>
+            {isLoadingPokemonData && (
               <Skeleton variant="rectangular" width={96} height={96} />
-            ) : (
+            )}
+            {pokemonData && (
               <Image
-                src={pokemonData?.img ?? ""}
-                alt={pokemonData?.name ?? ""}
-                width={194}
-                height={194}
+                src={pokemonData.img}
+                alt={pokemonData.name}
+                width={96}
+                height={96}
               />
             )}
-          </Item>
-          <Item>
-            <Typography variant="body2">
-              Name: {capitalize(pokemonData?.name ?? "")}
-            </Typography>
-            <Types types={pokemonData?.types} />
-            <Typography variant="body2">
-              Base experience: {pokemonData?.baseExperience}
-            </Typography>
-            <Typography variant="body2">Id: {pokemonData?.id}</Typography>
-          </Item>
+          </StackItem>
+          <StackItem>
+            {isLoadingPokemonData && (
+              <>
+                <Skeleton variant="text" width={150} height={16} />
+                <Skeleton variant="text" width={170} height={16} />
+                <Skeleton variant="text" width={120} height={16} />
+              </>
+            )}
+            {pokemonData && (
+              <>
+                <Typography variant="body2">
+                  Name: {capitalize(pokemonData.name)}
+                </Typography>
+                <Stack direction={"row"} gap={1.5} alignItems={"center"}>
+                  <Typography variant="body2">Type:</Typography>
+                  {pokemonData.types.map((type) => (
+                    <Chip variant={"filled"} key={type} label={type} />
+                  ))}
+                </Stack>
+                <Typography variant="body2">
+                  Base experience: {pokemonData.baseExperience}
+                </Typography>
+                <Typography variant="body2">Id: {pokemonData.id}</Typography>
+              </>
+            )}
+          </StackItem>
         </Stack>
       )}
     </Box>
   );
 };
 
-const Item = (props: BoxProps) => {
+const StackItem = (props: BoxProps) => {
   return (
     <Box
       display={"flex"}
@@ -79,16 +90,5 @@ const Item = (props: BoxProps) => {
       flexWrap={"wrap"}
       {...props}
     />
-  );
-};
-
-const Types = ({ types }: { types?: string[] }) => {
-  return (
-    <Stack direction={"row"} gap={1.5} alignItems={"center"}>
-      <Typography variant="body2">Type:</Typography>
-      {types?.map((type) => (
-        <Chip variant={"filled"} key={type} label={type} />
-      ))}
-    </Stack>
   );
 };

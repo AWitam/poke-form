@@ -1,6 +1,6 @@
 "use client";
 
-import { createTheme, PaletteOptions } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import localFont from "next/font/local";
 
 const IBM_VGA = localFont({
