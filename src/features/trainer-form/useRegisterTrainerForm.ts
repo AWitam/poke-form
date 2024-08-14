@@ -26,8 +26,8 @@ const formSchema = z.object({
     .object({
       name: z.string(),
       id: z.number().optional(),
-    })
-    .optional()
+    }, {required_error: "Choose something"})
+    .nullable()
     .refine(
       (val) => {
         return !!val;
@@ -43,7 +43,7 @@ interface UseRegisterTrainerFormProps {
 export const useRegisterTrainerForm = ({
   onSuccessfulSubmit,
 }: UseRegisterTrainerFormProps) => {
-  const { control, reset, handleSubmit, getValues, setValue, watch } = useForm<
+  const { control, reset, handleSubmit, getValues, setValue, watch, formState } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
@@ -63,6 +63,8 @@ export const useRegisterTrainerForm = ({
   const autocompleteValue = getValues("pokemon");
   const query = watch("query");
 
+
+  console.log("formState", formState.errors);
   return {
     control,
     autocompleteValue,

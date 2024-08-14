@@ -36,23 +36,23 @@ export const PokemonPreview = ({ pokemonId }: PokemonPreviewProps) => {
     >
       {isEmptyState ? (
         <Box>Your pokemon</Box>
-      ) : (
+      ) : ( 
         <Stack gap={3} direction={{ xs: "column", sm: "row" }} width={"100%"}>
-          <Item alignItems={"center"}>
+          <Item>
             {isLoadingPokemonData ? (
               <Skeleton variant="rectangular" width={96} height={96} />
             ) : (
               <Image
                 src={pokemonData?.img ?? ""}
                 alt={pokemonData?.name ?? ""}
-                width={96}
-                height={96}
+                width={194}
+                height={194}
               />
             )}
           </Item>
           <Item>
             <Typography variant="body2">
-              Name: {capitalize(pokemonData?.name ?? '')}
+              Name: {capitalize(pokemonData?.name ?? "")}
             </Typography>
             <Types types={pokemonData?.types} />
             <Typography variant="body2">
@@ -74,6 +74,9 @@ const Item = (props: BoxProps) => {
       width={{ xs: "100%", md: "50%" }}
       color="grey.100"
       flexDirection={"column"}
+      justifyContent={"center"}
+      alignContent={"center"}
+      flexWrap={"wrap"}
       {...props}
     />
   );

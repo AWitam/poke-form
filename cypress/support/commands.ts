@@ -1,37 +1,44 @@
 /// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+Cypress.Commands.add("fillTrainerForm", (trainerName, trainerAge, query) => {
+  cy.get('input[name="trainerName"]').type(trainerName);
+  cy.get('input[name="trainerAge"]').type(trainerAge);
+  cy.get("#pokemon-name").click();
+  cy.focused().type(query);
+});
+
+Cypress.Commands.add("selectMatch", (match) => {
+  cy.contains(match).should("be.visible").click();
+});
+
+Cypress.Commands.add("checkSuccessDialog", (successMessage, resetMessage) => {
+  cy.get('div[role="presentation"]').should("be.visible");
+  cy.contains(successMessage).should("be.visible");
+  cy.contains(resetMessage).should("be.visible");
+});
+
+Cypress.Commands.add("verifyResetFormValues", () => {
+  cy.get('input[name="trainerName"]').should("have.value", "");
+  cy.get('input[name="trainerAge"]').should("have.value", "");
+  cy.get("#pokemon-name").should("have.value", "");
+});
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      fillTrainerForm(
+        trainerName: string,
+        trainerAge: string,
+        pokemonName: string
+      ): Chainable<void>;
+      checkSuccessDialog(
+        successMessage: string,
+        resetMessage: string
+      ): Chainable<void>;
+      selectMatch(match: string): Chainable<void>;
+      verifyResetFormValues(): Chainable<void>;
+    }
+  }
+}
+
+export {};
